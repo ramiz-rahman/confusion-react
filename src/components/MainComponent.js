@@ -45,7 +45,7 @@ class Main extends Component {
             )[0]
           }
           comments={this.state.comments.filter(
-            comment => comment.dishId == parseInt(match.params.dishId, 10)
+            comment => comment.dishId === parseInt(match.params.dishId, 10)
           )}
         />
       );
