@@ -39,14 +39,14 @@ const Home = props => {
           <RenderCard
             item={props.dish}
             isLoading={props.dishesLoading}
-            ErrMess={props.dishesErrMess}
+            errMess={props.dishesErrMess}
           />
         </div>
         <div className="col-12 col-md m-1">
           <RenderCard
             item={props.promotion}
             isLoading={props.promosLoading}
-            ErrMess={props.promosErrMess}
+            errMess={props.promosErrMess}
           />
         </div>
         <div className="col-12 col-md m-1">
