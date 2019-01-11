@@ -9,12 +9,14 @@ import {
   Media
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 const RenderLeader = ({ leader }) => {
   return (
     <Media className="mb-5 mt-3">
       <Media left>
-        <Media object src={leader.image} alt={leader.name} />
+        <Media object src={baseUrl + leader.image} alt={leader.name} />
       </Media>
       <Media body className="ml-5">
         <Media heading>{leader.name}</Media>
@@ -26,10 +28,25 @@ const RenderLeader = ({ leader }) => {
   );
 };
 
+const RenderLeaders = ({ leaders, isLoading, errMess }) => {
+  if (isLoading) {
+    return <Loading />;
+  } else if (errMess) {
+    return <h4>{errMess}</h4>;
+  } else {
+    return leaders.map(leader => (
+      <RenderLeader
+        leader={leader}
+        isLoading={isLoading}
+        errMess={errMess}
+        key={leader.id}
+      />
+    ));
+  }
+};
+
 function About(props) {
-  const leaders = props.leaders.map(leader => {
-    return <RenderLeader leader={leader} key={leader.id} />;
-  });
+  const leaders = RenderLeaders(props.leaders, props.isLoading, props.errmess);
 
   return (
     <div className="container">
