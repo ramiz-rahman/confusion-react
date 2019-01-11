@@ -11,6 +11,7 @@ import {
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { Fade, Stagger } from 'react-animation-components';
 
 const RenderLeader = ({ leader }) => {
   return (
@@ -34,14 +35,20 @@ const RenderLeaders = ({ leaders, isLoading, errMess }) => {
   } else if (errMess) {
     return <h4>{errMess}</h4>;
   } else {
-    return leaders.map(leader => (
-      <RenderLeader
-        leader={leader}
-        isLoading={isLoading}
-        errMess={errMess}
-        key={leader.id}
-      />
-    ));
+    return (
+      <Stagger in>
+        {leaders.map(leader => (
+          <Fade in key={leader.id}>
+            <RenderLeader
+              leader={leader}
+              isLoading={isLoading}
+              errMess={errMess}
+              key={leader.id}
+            />
+          </Fade>
+        ))}
+      </Stagger>
+    );
   }
 };
 
