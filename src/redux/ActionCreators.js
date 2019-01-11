@@ -201,3 +201,36 @@ export const leadersFailed = errmess => ({
   type: ActionTypes.LEADERS_FAILED,
   payload: errmess
 });
+
+export const postFeedback = feedback => dispatch => {
+  return fetch(baseUrl + 'feedback', {
+    method: 'POST',
+    body: JSON.stringify(feedback),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'same-origin'
+  })
+    .then(
+      response => {
+        if (response.ok) {
+          return response;
+        } else {
+          let error = new Error(
+            'Error ' + response.status + ': ' + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then(response => response.json())
+    .catch(error => {
+      console.log('Post feedback ', error.message, error);
+      alert('Your feedback could not be posted\nError: ', error.message, error);
+    });
+};
